@@ -88,22 +88,44 @@ function fonk() {
 
   //var subArray = [0, 2, 4, 6];
   var subArrayFilteredIndex = [];
+  var maxSubArraySum = -99999999999;
+  var maxSubArrayIndis = 0;
+
   for (let index = 1; index <= subArrayMaxLength; index++) {
+    var tmpSum = 0;
     if (index == 1) {
       //1 elemanlı tüm dizi indisleri arraye eklendi
-      for (let index = 0; index < array.length; index++) {
-        subArrayFilteredIndex.push(index);
+      for (let index2 = 0; index2 < array.length; index2++) {
+        subArrayFilteredIndex.push(index.toString()); //diziye ekle tek elemanlı sub strleri
+        tmpSum = index2; //toplam kontrolü için temp değer
+        if (tmpSum > maxSubArraySum) {
+          //daha büyük ise indis ve toplam güncellenir
+          maxSubArraySum = tmpSum;
+          maxSubArrayIndis = subArrayFilteredIndex.length - 1;
+        }
       }
     } else {
       //son eleman gezme
       var tmpArray = array;
-
       var subArray = subArrayCompress.slice(0, index);
       var temp = (subArray.length - 1) * 2; //patlak sıkışık dizi dışında çalışmıyor
       //temp değerini indisbelirle fonksiyonunu çağırdıktan sonra arttır
       for (let index2 = temp; index2 < tmpArray.length - 1; index2++) {
-        //subArray index dizisine at
+        
+        //push gerçekleştir
         subArrayFilteredIndex.push(subArray.toString());
+        
+
+
+
+        console.log("maxSUM=" + maxSubArraySum);
+        console.log("maxIndis=" + maxSubArrayIndis);
+        //subArray index dizisine at
+        tmpSum = checkSum(subArray,tmpArray);
+        if (tmpSum > maxSubArraySum) {//daha büyük ise indis ve toplam güncellenir
+          maxSubArraySum=tmpSum;
+          maxSubArrayIndis=(subArrayFilteredIndex.length)-1;
+        }
         subArray[subArray.length - 1]++; //subArray son elemanı bir arttırarak gez.
       }
     }
@@ -150,8 +172,13 @@ function indisBelirle(dizi, indis) {
 
 /////toplama işlemi için
 
-function checkSum(array) {
-  var sum = array.reduce(sumReduce);
+function checkSum(array,tmpArray) {
+  var tmpSubArray=[];
+  for (let index = 0; index < array.length; index++) {
+    tmpSubArray.push(tmpArray[array[index]]);
+    
+  }
+  var sum = tmpSubArray.reduce(sumReduce);
 
   function sumReduce(total, value) {
     return total + value;
