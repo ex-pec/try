@@ -96,7 +96,7 @@ function fonk() {
     if (index == 1) {
       //1 elemanlı tüm dizi indisleri arraye eklendi
       for (let index2 = 0; index2 < array.length; index2++) {
-        subArrayFilteredIndex.push(index.toString()); //diziye ekle tek elemanlı sub strleri
+        subArrayFilteredIndex.push(index2.toString()); //diziye ekle tek elemanlı sub strleri
         tmpSum = index2; //toplam kontrolü için temp değer
         if (tmpSum > maxSubArraySum) {
           //daha büyük ise indis ve toplam güncellenir
@@ -110,21 +110,20 @@ function fonk() {
       var subArray = subArrayCompress.slice(0, index);
       var temp = (subArray.length - 1) * 2; //patlak sıkışık dizi dışında çalışmıyor
       //temp değerini indisbelirle fonksiyonunu çağırdıktan sonra arttır
-      for (let index2 = temp; index2 < tmpArray.length - 1; index2++) {
-        
+      for (let index2 = temp; index2 < tmpArray.length; index2++) {
         //push gerçekleştir
         subArrayFilteredIndex.push(subArray.toString());
-        
-
-
 
         console.log("maxSUM=" + maxSubArraySum);
+        console.log(subArray);
         console.log("maxIndis=" + maxSubArrayIndis);
+
         //subArray index dizisine at
-        tmpSum = checkSum(subArray,tmpArray);
-        if (tmpSum > maxSubArraySum) {//daha büyük ise indis ve toplam güncellenir
-          maxSubArraySum=tmpSum;
-          maxSubArrayIndis=(subArrayFilteredIndex.length)-1;
+        tmpSum = checkSum(subArray, tmpArray);
+        if (tmpSum > maxSubArraySum) {
+          //daha büyük ise indis ve toplam güncellenir
+          maxSubArraySum = tmpSum;
+          maxSubArrayIndis = subArrayFilteredIndex.length - 1;
         }
         subArray[subArray.length - 1]++; //subArray son elemanı bir arttırarak gez.
       }
@@ -134,31 +133,17 @@ function fonk() {
   document.getElementById("add").innerHTML = subArrayFilteredIndex;
 }
 
-// function fonk2() {
-//   var dizi = [];
-//   //var dizi2 = [];
-//   var dizi2 = new Array;
-//   for (let index = 0; index < 2; index++) {
-//     index == 0 ? (dizi2 = [0, 1]) : (dizi2 = dizi2);
-//     var counter = 0;
-//     while (counter < 3) {
-//       // var dizi2 = new Array;
-//       // dizi2.forEach(element => {
-//       //   array3.push(element);
-//       // });
+// function lastMember(array) {
+//   subArrayFilteredIndex.push(subArray.toString());
 
-//       dizi[dizi.length] = dizi2.toString();
-//       console.log(dizi2 + " abura dizi2");
-//       dizi2[dizi2.length - 1] = dizi2[dizi2.length - 1] + 1;
-//       //dizi2[dizi2.length - 1] = index * 20;
-//       console.log(dizi);
-//       counter++;
-//     }
-//     dizi2 = [5, 8];
-//     // }
-//     console.log("-------------------");
+//   //subArray index dizisine at
+//   tmpSum = checkSum(subArray, tmpArray);
+//   if (tmpSum > maxSubArraySum) {
+//     //daha büyük ise indis ve toplam güncellenir
+//     maxSubArraySum = tmpSum;
+//     maxSubArrayIndis = subArrayFilteredIndex.length - 1;
 //   }
-//   document.getElementById("add").innerHTML = dizi;
+//   subArray[subArray.length - 1]++; //subArray son elemanı bir arttırarak gez.
 // }
 
 function indisBelirle(dizi, indis) {
@@ -172,11 +157,10 @@ function indisBelirle(dizi, indis) {
 
 /////toplama işlemi için
 
-function checkSum(array,tmpArray) {
-  var tmpSubArray=[];
+function checkSum(array, tmpArray) {
+  var tmpSubArray = [];
   for (let index = 0; index < array.length; index++) {
     tmpSubArray.push(tmpArray[array[index]]);
-    
   }
   var sum = tmpSubArray.reduce(sumReduce);
 
@@ -210,4 +194,31 @@ function checkSum(array,tmpArray) {
 
 //     return
 // }
+
 //[0,2,4,6]
+// function fonk2() {
+//   var dizi = [];
+//   //var dizi2 = [];
+//   var dizi2 = new Array;
+//   for (let index = 0; index < 2; index++) {
+//     index == 0 ? (dizi2 = [0, 1]) : (dizi2 = dizi2);
+//     var counter = 0;
+//     while (counter < 3) {
+//       // var dizi2 = new Array;
+//       // dizi2.forEach(element => {
+//       //   array3.push(element);
+//       // });
+
+//       dizi[dizi.length] = dizi2.toString();
+//       console.log(dizi2 + " abura dizi2");
+//       dizi2[dizi2.length - 1] = dizi2[dizi2.length - 1] + 1;
+//       //dizi2[dizi2.length - 1] = index * 20;
+//       console.log(dizi);
+//       counter++;
+//     }
+//     dizi2 = [5, 8];
+//     // }
+//     console.log("-------------------");
+//   }
+//   document.getElementById("add").innerHTML = dizi;
+// }
