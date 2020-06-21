@@ -3,10 +3,10 @@ var maxSubArraySum = -99999999999; //for sum check
 var maxSubArrayIndisArray = []; //biggest sum index
 var array = [-1, 9, 13, 10, -81, 69, 31, 199]; //20 eleman
 
-var realSubArray = []; //sub arrayler için buna gerek yok aslında indisler üzerinden çalışıyoruz
+var realSubArray = []; //sub arrayleri görmek için buna gerek yok aslında indisler üzerinden çalışıyoruz
 
 var subArrayMaxLength = Math.ceil(array.length / 2); //10 eleman max
-var subArrayCompress = [];
+var subArrayCompress = [];//sıştırılmış minimum dizi
 
 for (let index = 0; index < array.length; index = index + 2)
   subArrayCompress.push(index);
@@ -51,8 +51,7 @@ function fonk() {
 function lastMember(index) {
   //son eleman gezme
 
-  //forScroll değerini indisbelirle fonksiyonunu çağırdıktan sonra arttır
-  var forScroll = subArray[subArray.length - 2] + 2; //patlak sıkışık dizi dışında çalışmıyor
+  var forScroll = subArray[subArray.length - 2] + 2; //son eleman başlangıç indisi
 
   for (let index2 = forScroll; index2 < tmpArrayChanged.length - 1; index2++) {
     //push gerçekleştir
@@ -65,7 +64,7 @@ function lastMember(index) {
   subArrayFilteredIndex.push(subArray.toString());
   checkSumIndex(subArray, tmpArrayChanged);
   
-  
+  //recursive işlemi gerçekleştiriyor
   while (!checkSubArrayEnd()) {
     readyForShift();
     lastMember(index);
@@ -96,7 +95,7 @@ function checkSum(array, tmpArray) {
 //////chechk sum
 function checkSumIndex(tmpSubArray, tmpArray) {
   //
-  var tmpSum = checkSum(tmpSubArray, tmpArray);
+  var tmpSum = checkSum(tmpSubArray, tmpArrayChanged);
   if (tmpSum > maxSubArraySum) {
     //daha büyük ise indis ve toplam güncellenir
     maxSubArraySum = tmpSum;
