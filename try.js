@@ -1,23 +1,25 @@
+var array = [-1, 9, 13, 10, -81, 69, 31, 199, 125]; //dizimiz
+/*
+
+*/
+
 var subArrayFilteredIndex = []; //filtered sub array
-var maxSubArraySum = -99999999999; //for sum check
-var maxSubArrayIndisArray = []; //biggest sum index
-var array = [-1, 9, 13, 10, -81, 69, 31, 199]; //20 eleman
+var maxSubArraySum = Number.NEGATIVE_INFINITY; //en küçük negatif sayı
+var maxSubArrayIndisArray = []; //en büyük toplam indisleri
 
 var realSubArray = []; //sub arrayleri görmek için buna gerek yok aslında indisler üzerinden çalışıyoruz
-
-var subArrayMaxLength = Math.ceil(array.length / 2); //10 eleman max
-var subArrayCompress = [];//sıştırılmış minimum dizi
-
+//////////sıştırılmış minimum dizi
+var subArrayCompress = [];
 for (let index = 0; index < array.length; index = index + 2)
   subArrayCompress.push(index);
+////////
 
-var tmpArrayChanged = array; //temp üzerinde işlem gerçekleştirilir
 var subArray;
 ///////////////////////////ham veri///////////////////////////
 
 //ana fonksiyon
 function fonk() {
-  for (let index = 1; index <= subArrayMaxLength; index++) {
+  for (let index = 1; index <= Math.ceil(array.length / 2); index++) {
     var tmpSum = 0;
     if (index == 1) {
       //1 elemanlı tüm dizi indisleri arraye eklendi
@@ -33,18 +35,25 @@ function fonk() {
       lastMember(index);
     }
   }
-  var str2 = array.toString();
+
+  var str = "En büyük toplamlı dizi(ler)";
+  maxSubArrayIndisArray.forEach(element => {
+    str += "<br>"+realSubArray[element];
+  });
+
+  var str2 = "<br>Tüm komşusuz diziler.<br>";
+
   realSubArray.forEach(element => {
     str2 += "<br>" + element;
   });
-  document.getElementById("add1").innerHTML = str2;
-  document.getElementById("add2").innerHTML = maxSubArraySum;
-  var str = "";
-  maxSubArrayIndisArray.forEach(element => {
-    str += realSubArray[element];
-  });
+
+  var str3 = "Ana dizimiz<br>" + array.toString();
+
+  document.getElementById("add1").innerHTML = str3;
+  document.getElementById("add2").innerHTML = "Toplam <br>"+maxSubArraySum;
 
   document.getElementById("add3").innerHTML = str;
+  document.getElementById("add4").innerHTML = str2;
 }
 
 ////last member search
@@ -53,17 +62,17 @@ function lastMember(index) {
 
   var forScroll = subArray[subArray.length - 2] + 2; //son eleman başlangıç indisi
 
-  for (let index2 = forScroll; index2 < tmpArrayChanged.length - 1; index2++) {
+  for (let index2 = forScroll; index2 < array.length - 1; index2++) {
     //push gerçekleştir
     subArrayFilteredIndex.push(subArray.toString()); //indis dizisi gerçek dizi değil
     //subArray index dizisine at
-    checkSumIndex(subArray, tmpArrayChanged);
+    checkSumIndex(subArray);
     subArray[subArray.length - 1]++; //subArray son elemanı bir artırarak gez.
   }
   //son elemanı ekliyoruz
   subArrayFilteredIndex.push(subArray.toString());
-  checkSumIndex(subArray, tmpArrayChanged);
-  
+  checkSumIndex(subArray);
+
   //recursive işlemi gerçekleştiriyor
   while (!checkSubArrayEnd()) {
     readyForShift();
@@ -93,9 +102,9 @@ function checkSum(array, tmpArray) {
   return sum;
 }
 //////chechk sum
-function checkSumIndex(tmpSubArray, tmpArray) {
+function checkSumIndex(subArray) {
   //
-  var tmpSum = checkSum(tmpSubArray, tmpArrayChanged);
+  var tmpSum = checkSum(subArray, array);
   if (tmpSum > maxSubArraySum) {
     //daha büyük ise indis ve toplam güncellenir
     maxSubArraySum = tmpSum;
@@ -125,8 +134,6 @@ function checkSubArrayEnd() {
   }
   return state;
 }
-//realEnd if [15,17,19] shift işlemlerinden sonra
-//[0,2,4]'e gelmeli bu durumda 0. eleman shift yapılabilir
 
 function readyForShift() {
   //sondan bir önceden birer birer geri bakarak sıkışık dizi olup olmadığı kontrol edilmeli
@@ -140,7 +147,7 @@ function readyForShift() {
   //bu hesaba yalnızca bir eklenmeli
 
   for (
-    let index = tmpArrayChanged.length - 1, index2 = subArray.length - 1; //son elemanlar göz ardı edilir
+    let index = array.length - 1, index2 = subArray.length - 1; //son elemanlar göz ardı edilir
     index2 >= 0; //son indise kadar dönülür
     index -= 2, index2--
   ) {
