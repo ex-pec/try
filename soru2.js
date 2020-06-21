@@ -1,11 +1,11 @@
 //Soru 2: a'den b'ye kadar olan sayılardan, x'e tam bölünenlerin toplamını veren bir fonksiyon yazınız.
-var allResult;
+var a = 101;
+var b = 150;
+var x = 10;
+//////////////////////////////ham veri//////////////////
 
 function fonk2() {
-  var a = 101;
-  var b = 150;
-  var x = 10;
-  
+
   var state = true;
   document.getElementById("add5").innerHTML =
     a + " ile " + b + " arasında " + x + "'e bölünenler========>";
@@ -29,7 +29,7 @@ function fonk2() {
       break;
     }
   }
-  //var veri = state ? divide(a, b, x) : "Hiç bölünen sayı yok";
+  
 
   var str = "Bölünen sayılar";
   document.getElementById("add4").innerHTML = str + "<br>" + veri;
